@@ -1,13 +1,20 @@
-import { NavLink } from "react-router-dom";
-
-
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import  {Authcontext} from '../../../Provider/Provider'
 const Navbar = () => {
+    const navigate=useNavigate()
+    const { user, logout } = useContext(Authcontext)
+    const handlelogout = () => {
+        logout()
+            .then(() => {navigate('/login') })
+            .catch(error => console.log(error))
+    }
     const navlinks=<>
     <li className="uppercase"><NavLink to={'/'}>Home</NavLink></li>
    
-    <li className="uppercase"><NavLink>DASHBOARD</NavLink></li>
+    <li className="uppercase"><NavLink to={'/dash'}>DASHBOARD</NavLink></li>
     <li className="uppercase"><NavLink to={'/menu'}>Our Menu</NavLink></li>
-    <li className="uppercase"><NavLink>Our Shop</NavLink></li>
+    <li className="uppercase"><NavLink to={'/order'}>Our Shop</NavLink></li>
     <li className="uppercase"><NavLink>CONTACT US</NavLink></li>
    
     </>
@@ -30,7 +37,17 @@ const Navbar = () => {
                 <ul className="flex gap-4 ">
                        {navlinks}
                     </ul>
-                    <a className="btn">Button</a>
+                   
+                    {user ?
+                                <div className={`flex items-center gap-3 text-white`}>
+                                   
+                                    <button onClick={handlelogout} className="hidden lg:block  btn hover:text-white hover:bg-[#e879f9] py-4">Log Out</button>
+                                </div>
+
+                                :
+                                <Link to={'/login'} className="left-0 hidden lg:block  py-2 font-semibold rounded  dark:bg-violet-400 dark:text-gray-900"> Log in </Link>
+
+                            }
                 </div>
             </div>
         </div>

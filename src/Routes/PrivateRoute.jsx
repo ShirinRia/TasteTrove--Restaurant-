@@ -1,9 +1,10 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types'; // ES6
-import useAuth from '../Hooks/useAuth';
+import { useContext } from "react";
+import  {Authcontext} from '../Provider/Provider'
 import RingLoader from "react-spinners/RingLoader";
 const PrivateRoute = ({children}) => {
-    const {user,loading}=useAuth()
+    const {user,loading}=useContext(Authcontext)
     const location=useLocation()
     console.log(loading)
     if(loading){
@@ -15,7 +16,7 @@ const PrivateRoute = ({children}) => {
     }
     else{
         return (
-            <Navigate state={location.pathname} to={'/login'}></Navigate>
+            <Navigate state={{from:location}} to={'/login'} replace></Navigate>
             );
     }
 }

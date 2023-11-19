@@ -1,8 +1,8 @@
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
-import app from "../../Firebase/firebase.config"
+import app from "../Firebase/Firebase.config"
 import PropTypes from 'prop-types';
-import axios from 'axios';
+// import axios from 'axios';
 
 export const Authcontext = createContext(null)
 const googleprovider = new GoogleAuthProvider();
@@ -34,29 +34,29 @@ const Provider = ({ children }) => {
     useEffect(() => {
 
         const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-            const usermail = currentuser?.email || user?.email
+            // const usermail = currentuser?.email || user?.email
             setuser(currentuser)
 
-            const loggedinuser = { email: usermail }
+            // const loggedinuser = { email: usermail }
             setloading(false)
-            if (currentuser) {
+            // if (currentuser) {
 
-                axios.post('https://surplus-server.vercel.app/jwt', loggedinuser, { withCredentials: true },
-                )
-                    .then(res => {
-                        console.log(res.data);
-                    })
+            //     axios.post('https://surplus-server.vercel.app/jwt', loggedinuser, { withCredentials: true },
+            //     )
+            //         .then(res => {
+            //             console.log(res.data);
+            //         })
 
-            }
-            else {
-                axios.post('https://surplus-server.vercel.app/logout', loggedinuser, { withCredentials: true },
+            // }
+            // else {
+            //     axios.post('https://surplus-server.vercel.app/logout', loggedinuser, { withCredentials: true },
                    
-                )
-                    .then(res => {
-                        console.log(res.data);
+            //     )
+            //         .then(res => {
+            //             console.log(res.data);
 
-                    })
-            }
+            //         })
+            // }
 
         });
 
